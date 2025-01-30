@@ -10,6 +10,7 @@ class CustomUser(AbstractUser):
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='posts', on_delete=models.CASCADE)
     content = models.TextField()
+    intrests = models.CharField(max_length=100, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
