@@ -1,1 +1,1 @@
-web: gunicorn chitchat.wsg
+web: gunicorn hackathon3.wsg
