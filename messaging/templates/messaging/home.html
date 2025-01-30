@@ -24,16 +24,26 @@
             <h4>Comments</h4>
             <ul>
                 {% for comment in post.comments.all %}
-                    <li>{{ comment.author.username }}: {{ comment.content }} ({{ comment.created_at }})</li>
+                    <li>
+                        {{ comment.author.username }}: {{ comment.content }} ({{ comment.created_at }})
+                        {% if user == comment.author %}
+                            <a href="{% url 'edit_comment' comment.id %}?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}">Edit</a>
+                            <a href="#" onclick="document.getElementById('delete-form-{{ comment.id }}').submit();">Delete</a>
+                            <form id="delete-form-{{ comment.id }}" method="POST" action="{% url 'delete_comment' comment.id %}?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}" style="display: none;">
+                                {% csrf_token %}
+                            </form>
+                        {% endif %}
+                    </li>
                 {% endfor %}
             </ul>
 
             {% if user.is_authenticated %}
                 {% if selected_post and selected_post.id == post.id %}
-                    {% if not comment_added %}
+                    {% if action != 'delete_comment' and not comment_added %}
                         <form method="POST" action="{% url 'home' %}?{% if selected_interest %}interest={{ selected_interest }}{% endif %}">
                             {% csrf_token %}
                             <input type="hidden" name="post_id" value="{{ post.id }}">
+                            <input type="hidden" name="action" value="add_comment">
                             {{ form.as_p }}
                             <button type="submit">Add Comment</button>
                         </form>
@@ -44,7 +54,7 @@
                     <p><a href="?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}">Add Comment</a></p>
                 {% endif %}
             {% else %}
-            <p>Please <a href="{% url 'login' %}">Log In</a> or <a href="{% url 'register' %}">Register</a> to comment.</p>
+                <p>Please <a href="{% url 'login' %}">Log In</a> or <a href="{% url 'register' %}">Register</a> to comment.</p>
             {% endif %}
         </li>
     {% endfor %}
