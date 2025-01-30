@@ -10,12 +10,10 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['content', 'interests']  # Use the corrected field name
 
-
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
-
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=False)
