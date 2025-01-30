@@ -17,10 +17,8 @@ class CommentForm(forms.ModelForm):
         fields = ['content']
 
 
-
-
 class SignUpForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(required=False)
 
     class Meta:
         model = User
