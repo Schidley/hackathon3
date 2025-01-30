@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Filter Posts by Interest</h2>
+<form method="GET" action="{% url 'home' %}">
+    <select name="interest" onchange="this.form.submit()">
+        <option value="">All Interests</option>
+        {% for interest in interests %}
+            <option value="{{ interest }}" {% if selected_interest == interest %}selected{% endif %}>{{ interest }}</option>
+        {% endfor %}
+    </select>
+</form>
+
+<h2>Recent Posts</h2>
+<ul>
+    {% for post in posts %}
+        <li>
+            <h3>{{ post.content }}</h3>
+            <p>by {{ post.author.username }} on {{ post.created_at }}</p>
+            {% if post.interests %}
+                <p>Interests: {{ post.interests }}</p>
+            {% endif %}
+
+            <h4>Comments</h4>
+            <ul>
+                {% for comment in post.comments.all %}
+                    <li>{{ comment.author.username }}: {{ comment.content }} ({{ comment.created_at }})</li>
+                {% endfor %}
+            </ul>
+
+            {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'home' %}">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+                {{ form.as_p }}
+                <button type="submit">Add Comment</button>
+            </form>
+            {% else %}
+            <p>Please <a href="{% url 'login' %}">Log In</a> or <a href="{% url 'register' %}">Register</a> to comment.</p>
+
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
