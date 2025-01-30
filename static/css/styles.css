@@ -1,0 +1,24 @@
+html,
+body {
+    height: 100%;
+    background-color: aquamarine;
+}
+
+/* Wrapper for the whole page content */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Make the main content flex-grow */
+.content {
+    flex: 1;
+}
+
+.footer {
+    background: #f8f9fa;
+    /* Light background for the footer */
+    padding: 1rem 0;
+    text-align: center;
+}
