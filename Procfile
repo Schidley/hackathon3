@@ -1,1 +1,1 @@
-web: gunicorn chitchat.wsg
+web: gunicorn chitchat.wsgi
