@@ -11,6 +11,10 @@ from django.shortcuts import render, redirect
 from .models import Post, Comment
 from .forms import CommentForm
 
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Post, Comment
+from .forms import CommentForm
+
 def home_view(request):
     interest = request.GET.get('interest')
     if interest:
@@ -18,6 +22,13 @@ def home_view(request):
     else:
         posts = Post.objects.all()
 
+    selected_post_id = request.GET.get('post_id')
+    selected_post = None
+    comment_added = request.GET.get('comment_added') == 'true'
+    if selected_post_id:
+        selected_post = get_object_or_404(Post, id=selected_post_id)
+
+    # Handle comment submission
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -25,14 +36,24 @@ def home_view(request):
             comment.author = request.user
             comment.post_id = request.POST.get('post_id')
             comment.save()
-            return redirect('home')
+            # Redirect back to home with the selected post and interest filter, if any
+            redirect_url = f'{request.path}?post_id={comment.post_id}&comment_added=true'
+            if interest:
+                redirect_url += f'&interest={interest}'
+            return redirect(redirect_url)
+
     else:
         form = CommentForm()
 
-    # Get a distinct list of interests from all posts
     interests = Post.objects.values_list('interests', flat=True).distinct()
-    return render(request, 'messaging/home.html', {'posts': posts, 'selected_interest': interest, 'interests': interests, 'form': form})
-
+    return render(request, 'messaging/home.html', {
+        'posts': posts,
+        'selected_interest': interest,
+        'interests': interests,
+        'form': form,
+        'selected_post': selected_post,
+        'comment_added': comment_added,
+    })
 
 @login_required
 def profile_view(request):
