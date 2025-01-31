@@ -27,6 +27,48 @@ os.environ['SECRET_KEY'] = 'your_secret_key_here'
 
 ## ERD
 
-![chitchatERD](ChitchatERD.png)
+![chitchatERD](readmeimages\ChitchatERD.png)
 
 This shows the models that were ideated for our project.
+
+## Deployment
+
+Deployment was handled on Heroku. This necessitated the creation of a Procfile, used to specify guinicon handling, and the setting of 
+environment variables on that platform, namely DISABLE_COLLECTSTATIC and SECRET_KEY. 
+Deploying in this way also meant static files had to be served by some external service, and for this purpose Whitenoise was installed,
+and the approprite lines added to settings.py (below)
+```
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+```
+
+Secret key handling was performed locally by defining a %SECRET_KEY% as a global enviroment variable, and adding env.py to gitignore,
+ensuring that the secret key has never been in a publicly accesable place, either on Heroku or in the public development repository.
+
+## Visual Design  
+We decided that we would be going for a clean, casual, easy feel and post-it notes is the ideal manifestation of that idea of casual, 
+short messaaging and information distribution. To realise this, the following designs were ideated - 
+
+![postitcolours](readmeimages\postitpalette.png)
+
+Were arrived at for the colours, with a pastel theme for ease of viewing and broad appeal.
+
+![background](readmeimages\sampleempty.png)
+
+And this background, to again strengthen the themes of comfortable, familiar methods of leaving short messages, a literal noticeboard. 
+The combined look of the elements is provided below, showing design evoloutions such as subtle shadowing to show a 3d effect, and a 
+revised pallette for greater visual clarity.
+
+![fullsample](readmeimages\combinedlook.png)
+
+## Functional design - a snapshot
+
+Below are compared two views of the database design phase of the project, showing logged in and logged out views, highlighting the 
+ability for only logged in users to make a post. This phase was moved through quickly, and is included to demonstrate evolution of 
+database policies, requiring appropriate migration management. 
+
+![in](readmeimages\loggedin.png)
+![out](readmeimages\loggedout.png)
