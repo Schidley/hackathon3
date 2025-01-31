@@ -27,7 +27,7 @@ os.environ['SECRET_KEY'] = 'your_secret_key_here'
 
 ## ERD
 
-![chitchatERD](readmeimages\ChitchatERD.png)
+![chitchatERD](readmeimages/ChitchatERD.png)
 
 This shows the models that were ideated for our project.
 
@@ -52,17 +52,17 @@ ensuring that the secret key has never been in a publicly accesable place, eithe
 We decided that we would be going for a clean, casual, easy feel and post-it notes is the ideal manifestation of that idea of casual, 
 short messaaging and information distribution. To realise this, the following designs were ideated - 
 
-![postitcolours](readmeimages\postitpalette.png)
+![postitcolours](readmeimages/postitpalette.png)
 
 Were arrived at for the colours, with a pastel theme for ease of viewing and broad appeal.
 
-![background](readmeimages\sampleempty.png)
+![background](readmeimages/sampleempty.png)
 
 And this background, to again strengthen the themes of comfortable, familiar methods of leaving short messages, a literal noticeboard. 
 The combined look of the elements is provided below, showing design evoloutions such as subtle shadowing to show a 3d effect, and a 
 revised pallette for greater visual clarity.
 
-![fullsample](readmeimages\combinedlook.png)
+![fullsample](readmeimages/combinedlook.png)
 
 ## Functional design - a snapshot
 
@@ -70,5 +70,19 @@ Below are compared two views of the database design phase of the project, showin
 ability for only logged in users to make a post. This phase was moved through quickly, and is included to demonstrate evolution of 
 database policies, requiring appropriate migration management. 
 
-![in](readmeimages\loggedin.png)
-![out](readmeimages\loggedout.png)
+![in](readmeimages/loggedin.png)
+![out](readmeimages/loggedout.png)
+
+## User Stories
+As a user, I want to send Post-it note messages to my friends.
+
+As a user, I want to change the color of my Post-it notes.
+
+As a user, I want to receive notifications for new Post-it notes.
+
+As a user, I want to delete my Post-it note messages.
+
+As a user, I want to edit my Post-it note messages.
+
+As an admin, I want a built-in backend to view the database
+
