@@ -15,13 +15,19 @@
 <ul>
     {% for post in posts %}
         <li>
-            <h3>{{ post.content }}</h3>
-            <p>by {{ post.author.username }} on {{ post.created_at }}</p>
-            {% if post.interests %}
-                <p>Interests: {{ post.interests }}</p>
-            {% endif %}
 
-            <h4>Comments</h4>
+            <div id="post-{{ post.id }}" class="post">
+                <h2>{{ post.title }}</h2>
+                <p>
+                    {{ post.content|truncatewords:15 }}
+                    <a href="{% url 'post_detail' post.id %}?from=post-{{ post.id }}">Read More</a>
+                    {% if post.interests %}
+                    <p>Interests: {{ post.interests }}</p>
+                    {% endif %}
+                </p>
+            </div>
+
+            <h4>Comments ({{ post.comments.count }})</h4>
             <ul>
                 {% for comment in post.comments.all %}
                     <li>

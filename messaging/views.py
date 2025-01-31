@@ -1,19 +1,28 @@
-from django.shortcuts import render
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .forms import PostForm
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
-from django.views.generic import ListView
-from .models import Post
-from django.shortcuts import render
-from django.shortcuts import render, redirect
-from .models import Post, Comment
-from .forms import CommentForm
+
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comment
-from .forms import CommentForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
+
+from django.views.generic import ListView
+from .models import Post, Comment
+from .forms import CommentForm, PostForm
+
+from django.shortcuts import render, redirect
+from .forms import PostForm
+from .models import Post
+from django.contrib.auth.models import User
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import CommentForm
+from .models import Post, Comment
+
+
+# post_detail
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    return render(request, 'messaging/post_detail.html', {'post': post})
 
 
 # home_view
@@ -64,14 +73,17 @@ def home_view(request):
 def profile_view(request):
     return render(request, 'registration/profile.html')
 
+# add_post
+
+
 def add_post(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
+            post.author = request.user  # Assuming the logged-in user is the author
             post.save()
-            return redirect('post_list')  # Redirect to the 'post_list' view
+            return redirect('home')  # Redirect to the home page
     else:
         form = PostForm()
     return render(request, 'messaging/add_post.html', {'form': form})
@@ -95,9 +107,7 @@ class PostListView(ListView):
     template_name = 'messaging/post_list.html'  # Specify your template name here
     context_object_name = 'posts'
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
-from .forms import SignUpForm
+
 
 def register(request):
     if request.method == 'POST':
@@ -112,11 +122,6 @@ def register(request):
         form = SignUpForm()
     return render(request, 'registration/register.html', {'form': form})
 
-
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comment
-from .forms import CommentForm
-from django.contrib.auth.decorators import login_required
 
 
 @login_required
