@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Unkempt:wght@400;700&display=swap');
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url(/static/images/black-chalkboard-background.webp);
+}
+
+.container{
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: none;
+}
+
+nav {
+    background-image: url(/static/images/wooden-background.webp);
+    background-size: cover;
+    border-bottom: 1px solid black;
+    box-shadow: 0 2px 3px #161616;
+}
+
+h1, h4, h5{
+    font-family: "unkempt", sans-serif;
+    color: white;
+}
+
+h4{
+    font-family: "unkempt", sans-serif;
+    color: black;
+}
+
+p {
+    font-family: "Special Elite", cursive;
+    color: white;
+    font-size: large;
+}
+
+footer{
+    background-image: url(/static/images/wooden-background.webp);
+    background-size: cover;
+    margin-top: auto;
+    border-top: 1px solid black;
+    box-shadow: 0px -2px 3px #161616;
+}
+
+#footer-content{
+    padding-top: 5px;
+    color: #000;
+}
+
+.card-space{
+    margin-right: 40px;
+}
+
+#content-card{
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 200px;
+    height: 200px;
+}
+
+.card-body{
+    max-height: 200px;
+    max-width: 200px;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.card-title{
+    color: black;
+    font-family: "unkempt", sans-serif;
+}
+
+
+/* Sticky note colour choices */
+.blue-note{
+    background-image: url(/static/images/blue.webp);
+}
+
+.red-note{
+    background-image: url(/static/images/red.webp);
+}
+
+.green-note{
+    background-image: url(/static/images/green.webp);
+}
+
+.yellow-note{
+    background-image: url(/static/images/yellow.webp);
+}
+
+.pink-note{
+    background-image: url(/static/images/pink.webp);
+}
+
+.cream-note{
+    background-image: url(/static/images/cream.webp);
+}
