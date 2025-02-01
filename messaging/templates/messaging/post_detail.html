@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="post-detail">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+</div>
+
+<!-- Display Comments for the Post -->
+<div class="comments-section">
+    <h4>Comments ({{ post.comments.count }})</h4>
+    <ul>
+        {% for comment in post.comments.all %}
+            <li>
+                {{ comment.author.username }}: {{ comment.content }} ({{ comment.created_at }})
+                <!-- {% if user == comment.author %}
+                    <a href="{% url 'edit_comment' comment.id %}?post_id={{ post.id }}">Edit</a>
+                    <a href="#" onclick="document.getElementById('delete-form-{{ comment.id }}').submit();">Delete</a>
+                    <form id="delete-form-{{ comment.id }}" method="POST" action="{% url 'delete_comment' comment.id %}?post_id={{ post.id }}" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                {% endif %} -->
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Add the Back Button -->
+<div class="back-button">
+    <button onclick="goBackToPost()" class="btn btn-primary">Back</button>
+</div>
+
+<script>
+    function goBackToPost() {
+        // Get the 'from' parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const fromPost = urlParams.get('from');
+        
+        // Redirect back to the home page with the anchor link
+        if (fromPost) {
+            window.location.href = '/' + '#' + fromPost;
+        } else {
+            window.location.href = '/';
+        }
+    }
+</script>
+
+{% endblock %}

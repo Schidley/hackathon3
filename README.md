@@ -27,7 +27,7 @@ os.environ['SECRET_KEY'] = 'your_secret_key_here'
 
 ## ERD
 
-![chitchatERD](readmeimages\ChitchatERD.png)
+![chitchatERD](readmeimages/ChitchatERD.png)
 
 This shows the models that were ideated for our project.
 
@@ -52,17 +52,17 @@ ensuring that the secret key has never been in a publicly accesable place, eithe
 We decided that we would be going for a clean, casual, easy feel and post-it notes is the ideal manifestation of that idea of casual, 
 short messaaging and information distribution. To realise this, the following designs were ideated - 
 
-![postitcolours](readmeimages\postitpalette.png)
+![postitcolours](readmeimages/postitpalette.png)
 
 Were arrived at for the colours, with a pastel theme for ease of viewing and broad appeal.
 
-![background](readmeimages\sampleempty.png)
+![background](readmeimages/sampleempty.png)
 
 And this background, to again strengthen the themes of comfortable, familiar methods of leaving short messages, a literal noticeboard. 
 The combined look of the elements is provided below, showing design evoloutions such as subtle shadowing to show a 3d effect, and a 
 revised pallette for greater visual clarity.
 
-![fullsample](readmeimages\combinedlook.png)
+![fullsample](readmeimages/combinedlook.png)
 
 ## Functional design - a snapshot
 
@@ -70,5 +70,91 @@ Below are compared two views of the database design phase of the project, showin
 ability for only logged in users to make a post. This phase was moved through quickly, and is included to demonstrate evolution of 
 database policies, requiring appropriate migration management. 
 
-![in](readmeimages\loggedin.png)
-![out](readmeimages\loggedout.png)
+![in](readmeimages/loggedin.png)
+![out](readmeimages/loggedout.png)
+
+## Unit testing
+
+Unit tests below were generated to test our custom user model, post model and comment model.
+
+```
+class CustomUserModelTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', first_name='Test', last_name='User', password='password')
+
+    def test_full_name(self):
+        self.assertEqual(self.user.get_full_name(), 'Test User')
+
+
+class PostModelTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='password')
+        self.post = Post.objects.create(author=self.user, content='This is a test post', interests='Testing')
+
+    def test_post_creation(self):
+        self.assertEqual(self.post.author.username, 'testuser')
+        self.assertEqual(self.post.content, 'This is a test post')
+        self.assertEqual(self.post.interests, 'Testing')
+        self.assertIsNotNone(self.post.created_at)
+
+    def test_post_str(self):
+        self.assertEqual(str(self.post), f"Post by {self.post.author.username} at {self.post.created_at}")
+
+
+class CommentModelTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='password')
+        self.post = Post.objects.create(author=self.user, content='This is a test post')
+        self.comment = Comment.objects.create(post=self.post, author=self.user, content='This is a test comment')
+
+    def test_comment_creation(self):
+        self.assertEqual(self.comment.post, self.post)
+        self.assertEqual(self.comment.author.username, 'testuser')
+        self.assertEqual(self.comment.content, 'This is a test comment')
+        self.assertIsNotNone(self.comment.created_at)
+
+    def test_comment_str(self):
+        self.assertEqual(str(self.comment), f"Comment by {self.comment.author.username} at {self.comment.created_at}")
+```
+All tests passed succesfully, with output as below
+
+![tests](readmeimages/unittests.png)
+
+## Repository management
+
+This project makes use of internal repositories, which appear as below: -
+
+![internalrepo](readmeimages/internalrepo.png)
+
+The method for creation is as follows - 
+1. Clone or create a repo to a directory, with VScode or git init
+2. Create a subdirectory, and navigate to it with `cd <subdirectory name>`
+3. Perfom  another git init.
+4. Navigate back to the primary git with `cd ..`
+
+In local VScode, these repositories exist as directories, with files able to be moved freely between them. However, when the primary 
+git is pushed, no changes to the internal git are included. Further, no referenece method exists (deliberately) for a primary repo to 
+reference files or folders within an internal repo. Along with not being able to cross-link code between them, this also means that the 
+contents of the internal repo are not visible.<br>
+
+In this project, internal repos were used to keep an immediately accesible folder to backup files, particularly `env.py`, that can be
+lost in a recloning of a project git. As the pull cannot change the contents of internal repos, the backup `env.py` will be untouched.
+The CI template was backed up to ensure file matching.
+
+
+## User Stories
+As a user, I want to send Post-it note messages to my friends.
+
+As a user, I want to change the color of my Post-it notes.
+
+As a user, I want to receive notifications for new Post-it notes.
+
+As a user, I want to delete my Post-it note messages.
+
+As a user, I want to edit my Post-it note messages.
+
+As an admin, I want a built-in backend to view the database
+
