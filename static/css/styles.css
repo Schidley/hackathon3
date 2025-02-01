@@ -1,24 +1,172 @@
-html,
-body {
-    height: 100%;
-    background-color: aquamarine;
-}
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Unkempt:wght@400;700&display=swap');
 
-/* Wrapper for the whole page content */
-.page-wrapper {
+body{
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    background-image: url(/static/images/black-chalkboard-background.webp);
 }
 
-/* Make the main content flex-grow */
-.content {
-    flex: 1;
+.container{
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: none;
 }
 
-.footer {
-    background: #f8f9fa;
-    /* Light background for the footer */
-    padding: 1rem 0;
-    text-align: center;
+nav {
+    background-image: url(/static/images/wooden-background.webp);
+    background-size: cover;
+    color: black;
+    border-bottom: 1px solid black;
+    box-shadow: 0 2px 3px #161616;
+    font-family: "Special Elite", cursive;
+    font-size: large;
+}
+
+#sticky-custom-link{
+    color: darkblue;
+}
+#sticky-custom-link:hover{
+    color: lightslategray;
+}
+
+.navbar-brand{
+    padding-left: 10px;
+}
+
+
+h1, h2,
+h3, h4,
+h5, h6{
+    font-family: "Special Elite", cursive;
+}
+
+p {
+    font-family: "unkempt", sans-serif;
+}
+
+footer{
+    background-image: url(/static/images/wooden-background.webp);
+    background-size: cover;
+    margin-top: auto;
+    border-top: 1px solid black;
+    box-shadow: 0px -2px 3px #161616;
+}
+
+#footer-content{
+    padding-top: 5px;
+    color: #000;
+}
+
+/* Home page view */
+header, .Board h5{
+    color: white;
+}
+
+#interest-form{
+    background-color: transparent;
+    color: white;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+.card-space{
+    margin-right: 40px;
+}
+
+#content-card{
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 300px;
+    height: 300px;
+}
+
+.card-body{
+    max-height: 300px;
+    max-width: 300px;
+    padding-left: 65px;
+    padding-right: 47px;
+    padding-top: 65px;
+    padding-bottom: 40px;
+    color: #000;
+}
+
+/* post details */
+
+.post-detail{
+    color: white;
+    font-size: x-large;
+}
+
+#meta-card{
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 200px;
+    height: 200px;
+}
+
+.card-meta-body{
+    max-height: 200px;
+    max-width: 200px;
+    padding-left: 45px;
+    padding-right: 37px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    color: #000;
+    font-size: small;
+}
+
+/* comments section */
+
+.comments-section{
+    color: white;
+}
+
+.comments-section p{
+    font-size: large;
+}
+
+/* add post */
+
+#add-post{
+    color: white;
+}
+
+
+
+/* form styling */
+label{
+    font-size: x-large;
+}
+
+#id_content,
+#id_interests,
+#id_username,
+#id_password{
+    background-color: rgba(255, 255, 255, 0.425);
+    color: white;
+}
+
+/* Sticky note colour choices */
+.blue-note{
+    background-image: url(/static/images/blue.webp);
+}
+
+.red-note{
+    background-image: url(/static/images/red.webp);
+}
+
+.green-note{
+    background-image: url(/static/images/green.webp);
+}
+
+.yellow-note{
+    background-image: url(/static/images/yellow.webp);
+}
+
+.pink-note{
+    background-image: url(/static/images/pink.webp);
+}
+
+.cream-note{
+    background-image: url(/static/images/cream.webp);
 }

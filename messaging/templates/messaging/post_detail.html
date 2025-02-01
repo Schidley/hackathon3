@@ -1,19 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div class="post-detail">
-    <h2>{{ post.title }}</h2>
-    <p>{{ post.content }}</p>
+<div class="container mt-4">
+    <div class="row d-flex justify-content-between">
+        <div class="col-2">
+            <div class="blue-note z-2 d-flex flex-wrap" id="meta-card">
+                <div class="card-meta-body z-3 d-flex">
+                    <div id="post-{{ post.id }}" class="post">
+                        <h6>{{ post.author}}</h6>
+                        <h6>{{ post.interests }}</h6>
+                        <h6>{{ post.created_at }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 d-flex align-items-center">
+            <div class="post-detail">
+                <p>{{ post.content }}</p>
+            </div>
+        </div>
+    </div>
 </div>
-
-<!-- Display Comments for the Post -->
-<div class="comments-section">
-    <h4>Comments ({{ post.comments.count }})</h4>
-    <ul>
-        {% for comment in post.comments.all %}
+<div class="container mt-5">
+    <!-- Display Comments for the Post -->
+    <div class="comments-section">
+        <h4>Comments ({{ post.comments.count }})</h4>
+        <ul>
+            {% for comment in post.comments.all %}
             <li>
-                {{ comment.author.username }}: {{ comment.content }} ({{ comment.created_at }})
+                <h5>{{ comment.author.username }}:</h5>
+                <p>{{ comment.content }} ({{ comment.created_at }})</p>
                 <!-- {% if user == comment.author %}
                     <a href="{% url 'edit_comment' comment.id %}?post_id={{ post.id }}">Edit</a>
                     <a href="#" onclick="document.getElementById('delete-form-{{ comment.id }}').submit();">Delete</a>
@@ -22,10 +38,34 @@
                     </form>
                 {% endif %} -->
             </li>
-        {% endfor %}
-    </ul>
+            {% endfor %}
+        </ul>
+        {% if user.is_authenticated %}
+        {% if selected_post and selected_post.id == post.id %}
+        {% if action != 'delete_comment' and not comment_added %}
+        <form method="POST" action="{% url 'home' %}?{% if selected_interest %}interest={{ selected_interest }}{% endif %}">
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value="{{ post.id }}">
+            <input type="hidden" name="action" value="add_comment">
+            {{ form.as_p }}
+            <button type="submit">Add Comment</button>
+        </form>
+        {% else %}
+        <p>Comment added! <a
+                href="?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}">Add
+                another comment</a></p>
+        {% endif %}
+        {% else %}
+        <p><a href="?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}">Add
+                Comment</a></p>
+        {% endif %}
+        {% else %}
+        <p>Please <a href="{% url 'login' %}">Log In</a> or <a href="{% url 'register' %}">Register</a> to comment.</p>
+        {% endif %}
+        </li>
+        </ul>
+    </div>
 </div>
-
 <!-- Add the Back Button -->
 <div class="back-button">
     <button onclick="goBackToPost()" class="btn btn-primary">Back</button>
@@ -36,7 +76,7 @@
         // Get the 'from' parameter from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const fromPost = urlParams.get('from');
-        
+
         // Redirect back to the home page with the anchor link
         if (fromPost) {
             window.location.href = '/' + '#' + fromPost;

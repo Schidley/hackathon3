@@ -1,68 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Filter Posts by Interest</h2>
-<form method="GET" action="{% url 'home' %}">
-    <select name="interest" onchange="this.form.submit()">
-        <option value="">All Interests</option>
-        {% for interest in interests %}
-            <option value="{{ interest }}" {% if selected_interest == interest %}selected{% endif %}>{{ interest }}</option>
-        {% endfor %}
-    </select>
-</form>
+<header class="container mt-4">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <h1 class="display-3">Chat Board</h1>
+        </div>
+        <div class="col d-flex justify-content-center align-items-center">
+            <h5>Filter Posts by Interest: </h5>
+            <form method="GET" action="{% url 'home' %}" id="interest-form">
+                <select name="interest" onchange="this.form.submit()">
+                    <option value="">All Interests</option>
+                    {% for interest in interests %}
+                    <option value="{{ interest }}" {% if selected_interest == interest %}selected{% endif %}>
+                        {{ interest }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </div>
+</header>
 
-<h2>Recent Posts</h2>
-<ul>
-    {% for post in posts %}
-        <li>
+<div class="container mt-2 Board">
+    <h5>Recent Posts</h5>
+    <div class="row d-flex justify-content-around">
 
-            <div id="post-{{ post.id }}" class="post">
-                <h2>{{ post.title }}</h2>
-                <p>
-                    {{ post.content|truncatewords:15 }}
-                    <a href="{% url 'post_detail' post.id %}?from=post-{{ post.id }}">Read More</a>
-                    {% if post.interests %}
-                    <p>Interests: {{ post.interests }}</p>
-                    {% endif %}
-                </p>
+        {% for post in posts %}
+        <div class="col-4">
+            <div class="blue-note z-2 d-flex flex-wrap" id="content-card">
+                <div class="card-body z-3 d-flex">
+                    <div id="post-{{ post.id }}" class="post">
+                        <p>
+                            {{ post.content|truncatewords:15 }}
+                            <a href="{% url 'post_detail' post.id %}?from=post-{{ post.id }}" id="sticky-custom-link">Read More</a>
+                            {% if post.interests %}
+                            <p>Interests: {{ post.interests }}</p>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
             </div>
+        </div>
+        {% endfor %}
 
-            <h4>Comments ({{ post.comments.count }})</h4>
-            <ul>
-                {% for comment in post.comments.all %}
-                    <li>
-                        {{ comment.author.username }}: {{ comment.content }} ({{ comment.created_at }})
-                        {% if user == comment.author %}
-                            <a href="{% url 'edit_comment' comment.id %}?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}">Edit</a>
-                            <a href="#" onclick="document.getElementById('delete-form-{{ comment.id }}').submit();">Delete</a>
-                            <form id="delete-form-{{ comment.id }}" method="POST" action="{% url 'delete_comment' comment.id %}?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}" style="display: none;">
-                                {% csrf_token %}
-                            </form>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+    </div>
 
-            {% if user.is_authenticated %}
-                {% if selected_post and selected_post.id == post.id %}
-                    {% if action != 'delete_comment' and not comment_added %}
-                        <form method="POST" action="{% url 'home' %}?{% if selected_interest %}interest={{ selected_interest }}{% endif %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="post_id" value="{{ post.id }}">
-                            <input type="hidden" name="action" value="add_comment">
-                            {{ form.as_p }}
-                            <button type="submit">Add Comment</button>
-                        </form>
-                    {% else %}
-                        <p>Comment added! <a href="?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}">Add another comment</a></p>
-                    {% endif %}
-                {% else %}
-                    <p><a href="?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}">Add Comment</a></p>
-                {% endif %}
-            {% else %}
-                <p>Please <a href="{% url 'login' %}">Log In</a> or <a href="{% url 'register' %}">Register</a> to comment.</p>
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
-{% endblock %}
+
+    {% endblock %}
