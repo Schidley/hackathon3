@@ -123,6 +123,28 @@ All tests passed succesfully, with output as below
 
 ![tests](readmeimages/unittests.png)
 
+## Repository management
+
+This project makes use of internal repositories, which appear as below: -
+
+![internalrepo](readmeimages/internalrepo.png)
+
+The method for creation is as follows - 
+1. Clone or create a repo to a directory, with VScode or git init
+2. Create a subdirectory, and navigate to it with `cd <subdirectory name>`
+3. Perfom  another git init.
+4. Navigate back to the primary git with `cd ..`
+
+In local VScode, these repositories exist as directories, with files able to be moved freely between them. However, when the primary 
+git is pushed, no changes to the internal git are included. Further, no referenece method exists (deliberately) for a primary repo to 
+reference files or folders within an internal repo. Along with not being able to cross-link code between them, this also means that the 
+contents of the internal repo are not visible.<br>
+
+In this project, internal repos were used to keep an immediately accesible folder to backup files, particularly `env.py`, that can be
+lost in a recloning of a project git. As the pull cannot change the contents of internal repos, the backup `env.py` will be untouched.
+The CI template was backed up to ensure file matching.
+
+
 ## User Stories
 As a user, I want to send Post-it note messages to my friends.
 
