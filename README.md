@@ -1,5 +1,19 @@
 # ChitChat - Join the conversation!
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Recreating the Project](#recreating-the-project)
+- [Usage](#usage)
+- [Screenshots](#screenshots)
+- [Responsivity](#responsivity)
+- [Repository Management](#repository-management)
+- [Use of AI](#use-of-ai)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+
 ## Project Overview
 Chitchat is a a lightweight, function complete, high-design messaging app for informal conversation, lighthearted discussion and
 positive energy. Our app is designed to be the perfect companion for those looking to engage in a chat with a clean, comfortable 
