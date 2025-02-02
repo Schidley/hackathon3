@@ -10,6 +10,15 @@ friends, share a laugh, or simply spread some positivity. Our app provides the i
 without any feature bloat. Embracing simplicity and joy, it fosters a welcoming and energetic atmosphere where every chat feels 
 effortless and fun.
 
+## Features
+- User authentication (sign up, login, logout)
+- Create, read, update, and delete posts
+- Comment on posts
+- Responsive design
+- User profile management
+
+
+
 ## Recreating the project
 1. Clone the repo to your local machine with git clone
 2. Set up a venv with python -m venv venv and activate it with your OS specific method
@@ -29,7 +38,7 @@ os.environ['SECRET_KEY'] = 'your_secret_key_here'
 
 ![chitchatERD](readmeimages/ChitchatERD.png)
 
-This shows the models that were ideated for our project.
+This shows the models that were ideated for our project. 'User' extends Django's built in user model. 
 
 ## Deployment
 
@@ -144,6 +153,12 @@ In this project, internal repos were used to keep an immediately accesible folde
 lost in a recloning of a project git. As the pull cannot change the contents of internal repos, the backup `env.py` will be untouched.
 The CI template was backed up to ensure file matching.
 
+## Technologies Used
+- Django
+- Bootstrap
+- PostGRES
+- HTML/CSS
+- JavaScript
 
 ## User Stories
 As a user, I want to send Post-it note messages to my friends.
