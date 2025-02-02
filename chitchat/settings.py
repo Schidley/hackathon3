@@ -78,7 +78,7 @@ TEMPLATES = [
 ]
 
 
-DEBUG = True
+
 
 
 WSGI_APPLICATION = 'chitchat.wsgi.application'
