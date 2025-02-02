@@ -132,6 +132,12 @@ All tests passed succesfully, with output as below
 
 ![tests](readmeimages/unittests.png)
 
+## Responsivity
+
+The navbar compresses to a menu button on screens with smaller resolutions, and larger
+ screens are catered to with bootstrapped spacing of posts preserving proper aspect 
+ratios.
+
 ## Repository management
 
 This project makes use of internal repositories, which appear as below: -
