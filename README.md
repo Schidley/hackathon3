@@ -132,6 +132,12 @@ All tests passed succesfully, with output as below
 
 ![tests](readmeimages/unittests.png)
 
+## Responsivity
+
+The navbar compresses to a menu button on screens with smaller resolutions, and larger
+ screens are catered to with bootstrapped spacing of posts preserving proper aspect 
+ratios.
+
 ## Repository management
 
 This project makes use of internal repositories, which appear as below: -
@@ -152,6 +158,15 @@ contents of the internal repo are not visible.<br>
 In this project, internal repos were used to keep an immediately accesible folder to backup files, particularly `env.py`, that can be
 lost in a recloning of a project git. As the pull cannot change the contents of internal repos, the backup `env.py` will be untouched.
 The CI template was backed up to ensure file matching.
+
+## Use of AI
+>1. Debugging Django Errors: Assisted in troubleshooting and fixing issues related to Django's WSGI application configuration.
+>2. Improving README: Suggested additional sections and content to make the README file more comprehensive and user-friendly.
+>3. Unit Testing: Provided unit tests for the Django models to ensure they function correctly.
+>4. URL Patterns: Reviewed and corrected URL patterns to ensure proper routing for adding comments.
+>5. Template Updates: Suggested updates to Django templates to ensure proper functionality and user experience.
+
+The above is a brief reflection by Copilot on its own contribution to the project. It was also utilised to help with generating user stories, and for simple suggestions to be elaborated on during ideation.
 
 ## Technologies Used
 - Django
