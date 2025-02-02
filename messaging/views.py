@@ -1,29 +1,18 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
-
 from django.views.generic import ListView
+from django.contrib.auth import authenticate
 from .models import Post, Comment
 from .forms import CommentForm, PostForm
-
-from django.shortcuts import render, redirect
-from .forms import PostForm
-from .models import Post
-from django.contrib.auth.models import User
-
-
-from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CommentForm
-from .models import Post, Comment
-
 
 # post_detail
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    return render(request, 'messaging/post_detail.html', {'post': post})
-
+    comments = post.comments.all()
+    form = CommentForm()
+    return render(request, 'messaging/post_detail.html', {'post': post, 'comments': comments, 'form': form})
 
 # home_view
 def home_view(request):
@@ -52,7 +41,6 @@ def home_view(request):
             if interest:
                 redirect_url += f'&interest={interest}'
             return redirect(redirect_url)
-
     else:
         form = CommentForm()
 
@@ -67,15 +55,12 @@ def home_view(request):
         'action': request.GET.get('action'),
     })
 
-
 # Profile
 @login_required
 def profile_view(request):
     return render(request, 'registration/profile.html')
 
 # add_post
-
-
 def add_post(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -89,6 +74,7 @@ def add_post(request):
     return render(request, 'messaging/add_post.html', {'form': form})
 
 
+# custom_login
 def custom_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -100,15 +86,13 @@ def custom_login(request):
         form = AuthenticationForm()
     return render(request, 'registration/login.html', {'form': form})
 
-
-
+# PostListView
 class PostListView(ListView):
     model = Post
     template_name = 'messaging/post_list.html'  # Specify your template name here
     context_object_name = 'posts'
 
-
-
+# register
 def register(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -122,41 +106,58 @@ def register(request):
         form = SignUpForm()
     return render(request, 'registration/register.html', {'form': form})
 
+# add_comment
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Post, Comment
+from .forms import CommentForm
 
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('post_detail', post_id=post.id)  # Redirect after successful post
+    else:
+        form = CommentForm()
+    return render(request, 'messaging/post_detail.html', {'form': form, 'post': post})
+
+
+
+
+# edit_comment
+from django.shortcuts import get_object_or_404, redirect
+from .models import Comment
+from .forms import CommentForm
 
 @login_required
 def edit_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
-    if request.user != comment.author:
-        return redirect('home')
-
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            # Redirect to home with post_id and interest if provided
-            redirect_url = f'/?post_id={comment.post.id}'
-            if 'interest' in request.GET:
-                redirect_url += f'&interest={request.GET["interest"]}'
-            return redirect(redirect_url)
+            return redirect('post_detail', post_id=comment.post.id)
     else:
         form = CommentForm(instance=comment)
-    
-    return render(request, 'messaging/edit_comment.html', {'form': form, 'comment': comment})
+    return render(request, 'messaging/post_detail.html', {'form': form, 'post': comment.post})
 
 
+
+# delete_comment
+from django.shortcuts import get_object_or_404, redirect
+from django.http import HttpResponseNotAllowed
+from .models import Comment
 
 @login_required
 def delete_comment(request, comment_id):
-    if request.method == 'POST':
-        comment = get_object_or_404(Comment, id=comment_id)
-        post_id = comment.post.id
-        if request.user == comment.author:
-            comment.delete()
-            # Redirect to home with post_id and interest if provided
-            redirect_url = f'/?post_id={post_id}&comment_added=true&action=delete_comment'
-            if 'interest' in request.GET:
-                redirect_url += f'&interest={request.GET["interest"]}'
-            return redirect(redirect_url)
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.method == 'POST' and (comment.author == request.user or request.user.is_staff):
+        comment.delete()
+        return redirect('post_detail', post_id=comment.post.id)
     return HttpResponseNotAllowed(['POST'])
-
