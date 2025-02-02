@@ -5,7 +5,7 @@ from django.contrib.auth import login
 from django.views.generic import ListView
 from django.contrib.auth import authenticate
 from .models import Post, Comment
-from .forms import CommentForm, PostForm
+from .forms import CommentForm, PostForm, SignUpForm
 
 # post_detail
 def post_detail(request, post_id):
