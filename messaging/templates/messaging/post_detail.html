@@ -7,7 +7,7 @@
             <div class="blue-note z-2 d-flex flex-wrap" id="meta-card">
                 <div class="card-meta-body z-3 d-flex">
                     <div id="post-{{ post.id }}" class="post">
-                        <h6>{{ post.author}}</h6>
+                        <h6>{{ post.author }}</h6>
                         <h6>{{ post.interests }}</h6>
                         <h6>{{ post.created_at }}</h6>
                     </div>
@@ -29,46 +29,44 @@
             {% for comment in post.comments.all %}
             <li>
                 <h5>{{ comment.author.username }}:</h5>
-                <p>{{ comment.content }} ({{ comment.created_at }})</p>
-                <!-- {% if user == comment.author %}
-                    <a href="{% url 'edit_comment' comment.id %}?post_id={{ post.id }}">Edit</a>
-                    <a href="#" onclick="document.getElementById('delete-form-{{ comment.id }}').submit();">Delete</a>
-                    <form id="delete-form-{{ comment.id }}" method="POST" action="{% url 'delete_comment' comment.id %}?post_id={{ post.id }}" style="display: none;">
-                        {% csrf_token %}
-                    </form>
-                {% endif %} -->
+                <p id="comment-content-{{ comment.id }}">{{ comment.content }} ({{ comment.created_at }})</p>
+                <!-- Edit and Delete links for the author of the comment or staff -->
+                {% if comment.author == user or user.is_staff %}
+                <a href="#" onclick="toggleEditForm({{ comment.id }})">Edit</a> | 
+                <a href="#" onclick="event.preventDefault(); document.getElementById('delete-comment-form-{{ comment.id }}').submit();">Delete</a>
+                <!-- Delete Comment Form -->
+                <form id="delete-comment-form-{{ comment.id }}" action="{% url 'delete_comment' comment.id %}" method="post" style="display:none;">
+                    {% csrf_token %}
+                </form>
+                <!-- Edit Comment Form -->
+                <form id="edit-comment-form-{{ comment.id }}" action="{% url 'edit_comment' comment.id %}" method="post" style="display:none;">
+                    {% csrf_token %}
+                    <textarea name="content" rows="2">{{ comment.content }}</textarea>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('edit-comment-form-{{ comment.id }}').submit();">Save</a> | 
+                    <a href="#" onclick="toggleEditForm({{ comment.id }})">Cancel</a>
+                </form>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
-        {% if user.is_authenticated %}
-        {% if selected_post and selected_post.id == post.id %}
-        {% if action != 'delete_comment' and not comment_added %}
-        <form method="POST" action="{% url 'home' %}?{% if selected_interest %}interest={{ selected_interest }}{% endif %}">
-            {% csrf_token %}
-            <input type="hidden" name="post_id" value="{{ post.id }}">
-            <input type="hidden" name="action" value="add_comment">
-            {{ form.as_p }}
-            <button type="submit">Add Comment</button>
-        </form>
-        {% else %}
-        <p>Comment added! <a
-                href="?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}">Add
-                another comment</a></p>
-        {% endif %}
-        {% else %}
-        <p><a href="?post_id={{ post.id }}{% if selected_interest %}&interest={{ selected_interest }}{% endif %}">Add
-                Comment</a></p>
-        {% endif %}
-        {% else %}
-        <p>Please <a href="{% url 'login' %}">Log In</a> or <a href="{% url 'register' %}">Register</a> to comment.</p>
-        {% endif %}
-        </li>
-        </ul>
     </div>
 </div>
+<!-- Add Comment Form, visible only for logged-in users -->
+{% if user.is_authenticated %}
+<div class="container mt-5">
+    <h4><a href="#" onclick="toggleAddCommentForm()">Add a Comment</a></h4>
+    <div id="add-comment-form" style="display:none;">
+        <form id="add-comment-form-element" action="{% url 'add_comment' post.id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <a href="#" onclick="event.preventDefault(); document.getElementById('add-comment-form-element').submit();">Submit</a>
+        </form>
+    </div>
+</div>
+{% endif %}
 <!-- Add the Back Button -->
 <div class="back-button">
-    <button onclick="goBackToPost()" class="btn btn-primary">Back</button>
+    <a href="#" onclick="goBackToPost()">Back</a>
 </div>
 
 <script>
@@ -82,6 +80,27 @@
             window.location.href = '/' + '#' + fromPost;
         } else {
             window.location.href = '/';
+        }
+    }
+
+    function toggleEditForm(commentId) {
+        const contentElement = document.getElementById(`comment-content-${commentId}`);
+        const formElement = document.getElementById(`edit-comment-form-${commentId}`);
+        if (formElement.style.display === "none") {
+            formElement.style.display = "block";
+            contentElement.style.display = "none";
+        } else {
+            formElement.style.display = "none";
+            contentElement.style.display = "block";
+        }
+    }
+
+    function toggleAddCommentForm() {
+        const formElement = document.getElementById('add-comment-form');
+        if (formElement.style.display === "none") {
+            formElement.style.display = "block";
+        } else {
+            formElement.style.display = "none";
         }
     }
 </script>
