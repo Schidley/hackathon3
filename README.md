@@ -4,8 +4,7 @@
 - [Introduction](#introduction)
 - [Features](#features)
 - [Recreating the Project](#recreating-the-project)
-- [Usage](#usage)
-- [Screenshots](#screenshots)
+- [Validations](#validations)
 - [Responsivity](#responsivity)
 - [Repository Management](#repository-management)
 - [Use of AI](#use-of-ai)
@@ -47,6 +46,21 @@ os.environ['SECRET_KEY'] = 'your_secret_key_here'
 7. Create a superuser with python manage.py createsuperuser
 8. Run the development server with python manage.py runserver
 9. Open your web browser and go to http://localhost:8000 to access the application.
+
+## Validations
+
+Lighthouse output was as follows - 
+
+![lighthouse](readmeimages/chitchatlighthouse.png)
+
+And WAVE tested as below - 
+
+![AVE](readmeimages/chitchatWAVE.png)
+
+The contrast alerts are caused by the way images are used to achieve a white on black effect, and the text is high-contrast from a user
+view, see below - 
+
+![contWAVE](readmeimages/WAVEcontrast.png)
 
 ## ERD
 
