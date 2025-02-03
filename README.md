@@ -1,4 +1,4 @@
-# ChitChat - Join the conversation!
+# [ChitChat - Join the conversation!](https://chitchatmessaging-8d7e62080cb8.herokuapp.com/)
 
 ## Table of Contents
 - [Introduction](#introduction)
