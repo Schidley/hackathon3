@@ -16,24 +16,33 @@ body{
 nav {
     background-image: url(/static/images/wooden-background.webp);
     background-size: cover;
+    color: black;
     border-bottom: 1px solid black;
     box-shadow: 0 2px 3px #161616;
+    font-family: "Special Elite", cursive;
+    font-size: large;
 }
 
-h1, h4, h5{
-    font-family: "unkempt", sans-serif;
-    color: white;
+#sticky-custom-link{
+    color: darkblue;
+}
+#sticky-custom-link:hover{
+    color: lightslategray;
 }
 
-h4{
-    font-family: "unkempt", sans-serif;
-    color: black;
+.navbar-brand{
+    padding-left: 10px;
+}
+
+
+h1, h2,
+h3, h4,
+h5, h6{
+    font-family: "Special Elite", cursive;
 }
 
 p {
-    font-family: "Special Elite", cursive;
-    color: white;
-    font-size: large;
+    font-family: "unkempt", sans-serif;
 }
 
 footer{
@@ -49,6 +58,17 @@ footer{
     color: #000;
 }
 
+/* Home page view */
+header, .Board h5{
+    color: white;
+}
+
+#interest-form{
+    background-color: transparent;
+    color: white;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
 .card-space{
     margin-right: 40px;
 }
@@ -56,24 +76,75 @@ footer{
 #content-card{
     background-repeat: no-repeat;
     background-size: contain;
+    width: 300px;
+    height: 300px;
+}
+
+.card-body{
+    max-height: 300px;
+    max-width: 300px;
+    padding-left: 65px;
+    padding-right: 47px;
+    padding-top: 65px;
+    padding-bottom: 40px;
+    color: #000;
+}
+
+/* post details */
+
+.post-detail{
+    color: white;
+    font-size: x-large;
+}
+
+#meta-card{
+    background-repeat: no-repeat;
+    background-size: contain;
     width: 200px;
     height: 200px;
 }
 
-.card-body{
+.card-meta-body{
     max-height: 200px;
     max-width: 200px;
-    padding-left: 40px;
-    padding-right: 30px;
-    padding-top: 40px;
+    padding-left: 45px;
+    padding-right: 37px;
+    padding-top: 50px;
     padding-bottom: 40px;
+    color: #000;
+    font-size: small;
 }
 
-.card-title{
-    color: black;
-    font-family: "unkempt", sans-serif;
+/* comments section */
+
+.comments-section{
+    color: white;
 }
 
+.comments-section p{
+    font-size: large;
+}
+
+/* add post */
+
+#add-post{
+    color: white;
+}
+
+
+
+/* form styling */
+label{
+    font-size: x-large;
+}
+
+#id_content,
+#id_interests,
+#id_username,
+#id_password{
+    background-color: rgba(255, 255, 255, 0.425);
+    color: white;
+}
 
 /* Sticky note colour choices */
 .blue-note{
