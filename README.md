@@ -204,13 +204,13 @@ The above is a brief reflection by Copilot on its own contribution to the projec
 - JavaScript
 
 ## User Stories
-As a user, I want to sign up for an account so that I can start using the app.
-As a user, I want to log in to my account so that I can access my posts and comments.
-As a user, I want to create a new post so that I can share my thoughts with others.
-As a user, I want to comment on a post so that I can engage in discussions.
-As a user, I want to edit my comment so that I can correct or update it.
-As a user, I want to delete my comment so that I can remove content I no longer want to share.
-As a user, I want to view a list of posts filtered by interest so that I can find content relevant to my interests.
+- As a user, I want to sign up for an account so that I can start using the app.
+- As a user, I want to log in to my account so that I can access my posts and comments.
+- As a user, I want to create a new post so that I can share my thoughts with others.
+- As a user, I want to comment on a post so that I can engage in discussions.
+- As a user, I want to edit my comment so that I can correct or update it.
+- As a user, I want to delete my comment so that I can remove content I no longer want to share.
+- As a user, I want to view a list of posts filtered by interest so that I can find content relevant to my interests.
 
 ## Thanks
 
